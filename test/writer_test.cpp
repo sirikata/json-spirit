@@ -48,7 +48,7 @@ namespace
 
         void check_eq( const ValueType& value, const String_type& expected_result )
         {
-           assert_eq( write( value ), expected_result );
+           ASSERT_EQ( write( value ), expected_result );
         }
 
         void check_eq( const ValueType& value, const char* expected_result )
@@ -58,18 +58,18 @@ namespace
 
         void check_eq_pretty( const ValueType& value, const char* expected_result )
         {
-            assert_eq( write_formatted( value ), to_str( expected_result ) );
-            assert_eq( write( value, pretty_print ), to_str( expected_result ) );
+            ASSERT_EQ( write_formatted( value ), to_str( expected_result ) );
+            ASSERT_EQ( write( value, pretty_print ), to_str( expected_result ) );
         }
 
         void check_eq_single_line_arrays( const ValueType& value, const char* expected_result )
         {
-            assert_eq( write( value, single_line_arrays ), to_str( expected_result ) );
+            ASSERT_EQ( write( value, single_line_arrays ), to_str( expected_result ) );
         }
 
         void check_eq( const ValueType& value, const String_type& expected_result , unsigned int options )
         {
-            assert_eq( write( value, options ), expected_result );
+            ASSERT_EQ( write( value, options ), expected_result );
         }
 
         void check_eq( const ValueType& value, const char* expected_result, unsigned int options )
@@ -452,7 +452,7 @@ namespace
 
         void test_obj_and_arrays()
         {
-            Object_type obj;
+            Object_type obj;
 
             add_value( obj, "a", 1 );
 
@@ -560,7 +560,7 @@ namespace
 
             write( arr, os );
 
-            assert_eq( os.str(), to_str( "[111,222]" ) );
+            ASSERT_EQ( os.str(), to_str( "[111,222]" ) );
         }
 
         void test_values()
@@ -605,7 +605,7 @@ namespace
 
             os << 0.123456789;
 
-            assert_eq( os.str(), to_str( "0.123457"
+            ASSERT_EQ( os.str(), to_str( "0.123457"
                                          "[0.123456789]"
                                          "0.123457" ) );
         }
@@ -620,33 +620,33 @@ namespace
 
         void run_tests()
         {
-            test_empty_obj();
-            test_obj_with_one_member();
-            test_obj_with_two_members();
-            test_obj_with_three_members();
-            test_obj_with_one_empty_child_obj();
-            test_obj_with_one_child_obj();
-            test_obj_with_grandchild_obj();
-            test_objs_with_bool_pairs();
-            test_objs_with_int_pairs();
-            test_objs_with_real_pairs();
-            test_objs_with_null_pairs();
-            test_empty_array();
-            test_array_with_one_member();
-            test_array_with_two_members();
-            test_array_with_n_members();
-            test_array_with_one_empty_child_array();
-            test_array_with_one_child_array();
-            test_array_with_grandchild_array();
-            test_array_and_objs();
-            test_obj_and_arrays();
-            test_escape_chars();
-            test_disabling_nonprintable_esc_chars();
-            test_to_stream();
-            test_values();
-            test_uint64();
-            test_ios_state_saved();
-            test_double_precision();
+            RUN_TEST(test_empty_obj());
+            RUN_TEST(test_obj_with_one_member());
+            RUN_TEST(test_obj_with_two_members());
+            RUN_TEST(test_obj_with_three_members());
+            RUN_TEST(test_obj_with_one_empty_child_obj());
+            RUN_TEST(test_obj_with_one_child_obj());
+            RUN_TEST(test_obj_with_grandchild_obj());
+            RUN_TEST(test_objs_with_bool_pairs());
+            RUN_TEST(test_objs_with_int_pairs());
+            RUN_TEST(test_objs_with_real_pairs());
+            RUN_TEST(test_objs_with_null_pairs());
+            RUN_TEST(test_empty_array());
+            RUN_TEST(test_array_with_one_member());
+            RUN_TEST(test_array_with_two_members());
+            RUN_TEST(test_array_with_n_members());
+            RUN_TEST(test_array_with_one_empty_child_array());
+            RUN_TEST(test_array_with_one_child_array());
+            RUN_TEST(test_array_with_grandchild_array());
+            RUN_TEST(test_array_and_objs());
+            RUN_TEST(test_obj_and_arrays());
+            RUN_TEST(test_escape_chars());
+            RUN_TEST(test_disabling_nonprintable_esc_chars());
+            RUN_TEST(test_to_stream());
+            RUN_TEST(test_values());
+            RUN_TEST(test_uint64());
+            RUN_TEST(test_ios_state_saved());
+            RUN_TEST(test_double_precision());
         }
     };
 
@@ -657,7 +657,7 @@ namespace
 
         wArray arr( 1, s );
 
-        assert_eq( write( arr ), L"[\"\\u" + result + L"\"]" );
+        ASSERT_EQ( write( arr ), L"[\"\\u" + result + L"\"]" );
     }
 
     void test_wide_esc_u()
@@ -679,7 +679,7 @@ namespace
     {
         const string expeced_result( is_printable( 'ä' ) ? "[\"äöüß\"]" : "[\"\\u00E4\\u00F6\\u00FC\\u00DF\"]" );
 
-        assert_eq( write( Array( 1, "äöüß" ) ), expeced_result );
+        ASSERT_EQ( write( Array( 1, "äöüß" ) ), expeced_result );
     }
 #endif
 }
@@ -687,11 +687,13 @@ namespace
 void json_spirit::test_writer()
 {
 #ifdef JSON_SPIRIT_VALUE_ENABLED
+    printf("writer_test: Config\n");
     Test_runner< Config >().run_tests();
-    test_extended_ascii();
+    RUN_TEST(test_extended_ascii());
 #endif
 #if defined( JSON_SPIRIT_WVALUE_ENABLED ) && !defined( BOOST_NO_STD_WSTRING )
+    printf("writer_test: wConfig\n");
     Test_runner< wConfig >().run_tests();
-    test_wide_esc_u();
+    RUN_TEST(test_wide_esc_u());
 #endif
 }

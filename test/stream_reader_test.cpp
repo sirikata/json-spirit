@@ -43,12 +43,12 @@ namespace
         {
             ValueType v;
             const bool ok = reader.read( v );
-            assert_eq( ok, true );
-            assert_eq( v.type(), ValueType::ARRAY_TYPE );
-            assert_eq( v.getArray().size(), expected_result.size() );
+            ASSERT_EQ( ok, true );
+            ASSERT_EQ( v.type(), ValueType::ARRAY_TYPE );
+            ASSERT_EQ( v.getArray().size(), expected_result.size() );
             for( vector< int >::size_type i = 0; i < v.getArray().size(); ++i )
             {
-                assert_eq( v.getArray()[i], expected_result[i] );
+                ASSERT_EQ( v.getArray()[i], expected_result[i] );
             }
         }
 
@@ -59,11 +59,11 @@ namespace
             try
             {
                 reader.read( v );
-                assert_eq( v.type(), ValueType::ARRAY_TYPE );
-                assert_eq( v.getArray().size(), expected_result.size() );
+                ASSERT_EQ( v.type(), ValueType::ARRAY_TYPE );
+                ASSERT_EQ( v.getArray().size(), expected_result.size() );
                 for( vector< int >::size_type i = 0; i < v.getArray().size(); ++i )
                 {
-                    assert_eq( v.getArray()[i], expected_result[i] );
+                    ASSERT_EQ( v.getArray()[i], expected_result[i] );
                 }
             }
             catch( ... )
@@ -86,7 +86,7 @@ namespace
 
                 ValueType v;
                 const bool ok = reader.read( v );
-                assert_eq( ok, false );
+                ASSERT_EQ( ok, false );
             }
             {
                 Istringstream_type is( to_str( s ) );
@@ -112,9 +112,9 @@ namespace
 
         void run_tests()
         {
-            test_stream_reader( "[][1][1,2][1,2,3]" );
-            test_stream_reader( "[] [1] [1,2] [1,2,3]" );
-            test_stream_reader( " [] [1] [1,2] [1,2,3] " );
+            RUN_TEST(test_stream_reader("[][1][1,2][1,2,3]"));
+            RUN_TEST(test_stream_reader("[] [1] [1,2] [1,2,3]"));
+            RUN_TEST(test_stream_reader(" [] [1] [1,2] [1,2,3] "));
         }
     };
 }
@@ -122,10 +122,12 @@ namespace
 void json_spirit::test_stream_reader()
 {
 #ifdef JSON_SPIRIT_VALUE_ENABLED
+    printf("stream_reader_test: Config\n");
     Test_runner< Config >().run_tests();
 #endif
 
 #if defined( JSON_SPIRIT_WVALUE_ENABLED ) && !defined( BOOST_NO_STD_WSTRING )
+    printf("stream_reader_test: Config\n");
     Test_runner< wConfig >().run_tests();
 #endif
 }

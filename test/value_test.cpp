@@ -36,12 +36,12 @@ namespace
         Value v2( obj_2 );
         Value v3( obj_3 );
 
-        assert_eq( v1.type(), Value::OBJECT_TYPE );
-        assert_eq ( v1, v2 );
-        assert_neq( v1, v3 );
+        ASSERT_EQ( v1.type(), Value::OBJECT_TYPE );
+        ASSERT_EQ ( v1, v2 );
+        ASSERT_NEQ( v1, v3 );
 
-        assert_eq( v1.getObject(), obj_1 );
-        assert_eq( v3.getObject(), obj_3 );
+        ASSERT_EQ( v1.getObject(), obj_1 );
+        ASSERT_EQ( v3.getObject(), obj_3 );
     }
 
     void test_array_value()
@@ -54,12 +54,12 @@ namespace
         Value v2( array_2 );
         Value v3( array_3 );
 
-        assert_eq( v1.type(), Value::ARRAY_TYPE );
-        assert_eq ( v1, v2 );
-        assert_neq( v1, v3 );
+        ASSERT_EQ( v1.type(), Value::ARRAY_TYPE );
+        ASSERT_EQ ( v1, v2 );
+        ASSERT_NEQ( v1, v3 );
 
-        assert_eq( v1.getArray(), array_1 );
-        assert_eq( v3.getArray(), array_3 );
+        ASSERT_EQ( v1.getArray(), array_1 );
+        ASSERT_EQ( v3.getArray(), array_3 );
     }
 
     void test_bool_value()
@@ -68,9 +68,9 @@ namespace
         Value v2( true );
         Value v3( false );
 
-        assert_eq( v1.type(), Value::BOOL_TYPE );
-        assert_eq ( v1, v2 );
-        assert_neq( v1, v3 );
+        ASSERT_EQ( v1.type(), Value::BOOL_TYPE );
+        ASSERT_EQ ( v1, v2 );
+        ASSERT_NEQ( v1, v3 );
 
         assert( v1.getBool() );
         assert( !v3.getBool() );
@@ -82,46 +82,46 @@ namespace
         Value v2( 1 );
         Value v3( INT_MAX );
 
-        assert_eq( v1.type(), Value::INT_TYPE );
-        assert_eq ( v1, v2 );
-        assert_eq( v3.type(), Value::INT_TYPE );
-        assert_neq( v1, v3 );
+        ASSERT_EQ( v1.type(), Value::INT_TYPE );
+        ASSERT_EQ ( v1, v2 );
+        ASSERT_EQ( v3.type(), Value::INT_TYPE );
+        ASSERT_NEQ( v1, v3 );
 
         unsigned int uint_max = INT_MAX;
 
-        assert_eq( v1.getInt(),    1 );
-        assert_eq( v1.getInt64(),  1 );
-        assert_eq( v1.getUInt64(), 1u );
-        assert_eq( v3.getInt(),    INT_MAX );
-        assert_eq( v3.getInt64(),  INT_MAX );
-        assert_eq( v3.getUInt64(), uint_max );
+        ASSERT_EQ( v1.getInt(),    1 );
+        ASSERT_EQ( v1.getInt64(),  1 );
+        ASSERT_EQ( v1.getUInt64(), 1u );
+        ASSERT_EQ( v3.getInt(),    INT_MAX );
+        ASSERT_EQ( v3.getInt64(),  INT_MAX );
+        ASSERT_EQ( v3.getUInt64(), uint_max );
 
         Value v5( max_int64 );
 
-        assert_eq( v5.getInt64(), max_int64 );
-        assert_eq( v5.getUInt64(), static_cast< uint64_t >( max_int64 ) );
+        ASSERT_EQ( v5.getInt64(), max_int64 );
+        ASSERT_EQ( v5.getUInt64(), static_cast< uint64_t >( max_int64 ) );
 
         const uint64_t max_int64_plus_1 = max_int64 + uint64_t( 1 );
 
         Value v6( max_int64_plus_1 );
 
-        assert_eq( v6.getUInt64(), max_int64_plus_1 );
+        ASSERT_EQ( v6.getUInt64(), max_int64_plus_1 );
 
         Value v7( max_uint64 );
 
-        assert_eq( v7.getUInt64(), max_uint64 );
+        ASSERT_EQ( v7.getUInt64(), max_uint64 );
 
         Value v8( 0 );
 
-        assert_eq( v8.getInt(),    0 );
-        assert_eq( v8.getInt64(),  0 );
-        assert_eq( v8.getUInt64(), 0u );
+        ASSERT_EQ( v8.getInt(),    0 );
+        ASSERT_EQ( v8.getInt64(),  0 );
+        ASSERT_EQ( v8.getUInt64(), 0u );
 
         Value v9( -1 );
 
-        assert_eq( v9.getInt(),   -1 );
-        assert_eq( v9.getInt64(), -1 );
-        assert_eq( v9.getUInt64(), max_uint64 );
+        ASSERT_EQ( v9.getInt(),   -1 );
+        ASSERT_EQ( v9.getInt64(), -1 );
+        ASSERT_EQ( v9.getUInt64(), max_uint64 );
     }
 
     void test_real_value()
@@ -130,12 +130,12 @@ namespace
         Value v2( 1.0 );
         Value v3( 2.0 );
 
-        assert_eq( v1.type(), Value::REAL_TYPE );
-        assert_eq ( v1, v2 );
-        assert_neq( v1, v3 );
+        ASSERT_EQ( v1.type(), Value::REAL_TYPE );
+        ASSERT_EQ ( v1, v2 );
+        ASSERT_NEQ( v1, v3 );
 
-        assert_eq( v1.getReal(), 1.0 );
-        assert_eq( v3.getReal(), 2.0 );
+        ASSERT_EQ( v1.getReal(), 1.0 );
+        ASSERT_EQ( v3.getReal(), 2.0 );
     }
 
     void test_null_value()
@@ -143,17 +143,17 @@ namespace
         Value v1;
         Value v2;
 
-        assert_eq( v1.type(), Value::NULL_TYPE );
-        assert_eq( v1.isNull(), true );
-        assert_eq( v1, v2 );
-        assert_eq( v1.isNull(), true );
-        assert_eq( Value( 1 ).isNull(), false );
+        ASSERT_EQ( v1.type(), Value::NULL_TYPE );
+        ASSERT_EQ( v1.isNull(), true );
+        ASSERT_EQ( v1, v2 );
+        ASSERT_EQ( v1.isNull(), true );
+        ASSERT_EQ( Value( 1 ).isNull(), false );
     }
 
     template< typename T >
     void test_get_value( const T& t )
     {
-        assert_eq( Value( t ).getValue< T >(), t );
+        ASSERT_EQ( Value( t ).getValue< T >(), t );
     }
 
     void test_get_value()
@@ -176,12 +176,12 @@ namespace
 
     void assert_array_eq( const Value& v, const Array& a )
     {
-        assert_eq( v.getArray(), a );
+        ASSERT_EQ( v.getArray(), a );
     }
 
     void assert_obj_eq( const Value& v, const Object& obj )
     {
-        assert_eq( v.getObject(), obj );
+        ASSERT_EQ( v.getObject(), obj );
     }
 
     template< typename T >
@@ -192,14 +192,14 @@ namespace
         Value v3;
         v3 = v1;
 
-        assert_eq( v1, v2 );
-        assert_eq( v1, v3 );
+        ASSERT_EQ( v1, v2 );
+        ASSERT_EQ( v1, v3 );
 
-        assert_eq( v2.getValue< T >(), t );
-        assert_eq( v3.getValue< T >(), t );
+        ASSERT_EQ( v2.getValue< T >(), t );
+        ASSERT_EQ( v3.getValue< T >(), t );
 
-        assert_eq( v1.isUInt64(), v2.isUInt64() );
-        assert_eq( v1.isUInt64(), v3.isUInt64() );
+        ASSERT_EQ( v1.isUInt64(), v2.isUInt64() );
+        ASSERT_EQ( v1.isUInt64(), v3.isUInt64() );
     }
 
     void check_copying_null()
@@ -209,8 +209,8 @@ namespace
         Value v3;
         v3 = v1;
 
-        assert_eq( v2.type(), Value::NULL_TYPE );
-        assert_eq( v3.type(), Value::NULL_TYPE );
+        ASSERT_EQ( v2.type(), Value::NULL_TYPE );
+        ASSERT_EQ( v3.type(), Value::NULL_TYPE );
     }
 
     void test_copying()
@@ -281,17 +281,17 @@ namespace
         obj[ "name 1" ] = 1;
         obj[ "name 2" ] = "two";
 
-        assert_eq( obj.size(), 2u );
+        ASSERT_EQ( obj.size(), 2u );
 
-        assert_eq( obj.find( "name 1" )->second.getInt(), 1 );
-        assert_eq( obj.find( "name 2" )->second.getString(), "two" );
+        ASSERT_EQ( obj.find( "name 1" )->second.getInt(), 1 );
+        ASSERT_EQ( obj.find( "name 2" )->second.getString(), "two" );
 #endif
     }
 
     template< typename Int >
     void check_an_int_is_a_real( Int i, bool expected_result )
     {
-        assert_eq( Value( i ).isUInt64(), expected_result );
+        ASSERT_EQ( Value( i ).isUInt64(), expected_result );
     }
 
     void test_is_uint64()
@@ -304,7 +304,7 @@ namespace
     template< typename Int >
     void check_an_int_is_a_real( Int i, double expected_result )
     {
-        assert_eq( Value( i ).getReal(), expected_result );
+        ASSERT_EQ( Value( i ).getReal(), expected_result );
     }
 
     void test_an_int_is_a_real()
@@ -321,7 +321,7 @@ namespace
     {
         Value v;
 
-        assert_eq( v.type(), Value::NULL_TYPE );
+        ASSERT_EQ( v.type(), Value::NULL_TYPE );
 
         try
         {
@@ -335,7 +335,7 @@ namespace
 
             os << "value type is " << (int)Value::NULL_TYPE << " not " << (int)vtype;
 
-            assert_eq( e.what(), os.str() );
+            ASSERT_EQ( e.what(), os.str() );
         }
     }
 
@@ -358,16 +358,16 @@ void test_path_contains() {
     const Value v1(obj1);
 
     // Top level get of a value
-    assert_eq(v1.contains("d"), true);
-    assert_eq(v1.contains("not there"), false);
+    ASSERT_EQ(v1.contains("d"), true);
+    ASSERT_EQ(v1.contains("not there"), false);
 
     // Two level
-    assert_eq(v1.contains("foo.c"), true);
-    assert_eq(v1.contains("foo.not there"), false);
+    ASSERT_EQ(v1.contains("foo.c"), true);
+    ASSERT_EQ(v1.contains("foo.not there"), false);
 
     // Three level
-    assert_eq(v1.contains("foo.bar.a"), true);
-    assert_eq(v1.contains("foo.bar.not there"), false);
+    ASSERT_EQ(v1.contains("foo.bar.a"), true);
+    ASSERT_EQ(v1.contains("foo.bar.not there"), false);
 }
 
 void test_path_get() {
@@ -379,25 +379,25 @@ void test_path_get() {
 
     // Top level get of a value
     const Value& dval = v1.get("d");
-    assert_eq(dval.type(), Value::INT_TYPE);
-    assert_eq(dval.getInt(), 4);
+    ASSERT_EQ(dval.type(), Value::INT_TYPE);
+    ASSERT_EQ(dval.getInt(), 4);
 
     // Two level
     const Value& cval = v1.get("foo.c");
-    assert_eq(cval.type(), Value::INT_TYPE);
-    assert_eq(cval.getInt(), 3);
+    ASSERT_EQ(cval.type(), Value::INT_TYPE);
+    ASSERT_EQ(cval.getInt(), 3);
 
     // Three level
     const Value& aval = v1.get("foo.bar.a");
-    assert_eq(aval.type(), Value::INT_TYPE);
-    assert_eq(aval.getInt(), 1);
+    ASSERT_EQ(aval.type(), Value::INT_TYPE);
+    ASSERT_EQ(aval.getInt(), 1);
 
     // Mutable access
     Value v2(obj1);
     Value& subval1 = v2.get("foo.bar");
-    assert_eq(subval1.type(), Value::OBJECT_TYPE);
+    ASSERT_EQ(subval1.type(), Value::OBJECT_TYPE);
     subval1.insert("x", "val");
-    assert_eq(subval1.getObject()["x"].getString(), "val");
+    ASSERT_EQ(subval1.getObject()["x"].getString(), "val");
 }
 
 void check_get_path_error_exception(const Value& v, const std::string& path, const Value::PathError& expected_error) {
@@ -405,7 +405,7 @@ void check_get_path_error_exception(const Value& v, const std::string& path, con
         v.get(path);
     }
     catch(const Value::PathError& e) {
-        assert_eq(expected_error, e);
+        ASSERT_EQ(expected_error, e);
         return;
     }
     assert(false);
@@ -448,14 +448,14 @@ void test_path_get_helpers() {
         ;
     Value v(foo);
 
-    assert_eq(v.getString("string"), "a string");
-    assert_eq(v.getObject("object"), obj);
-    assert_eq(v.getArray("array"), arr);
-    assert_eq(v.getBool("bool"), true);
-    assert_eq(v.getInt("int"), 42);
-    assert_eq(v.getInt64("int"), (boost::int64_t)42);
-    assert_eq(v.getUInt64("int"), (boost::uint64_t)42);
-    assert_eq(v.getReal("realint"), 12.f);
+    ASSERT_EQ(v.getString("string"), "a string");
+    ASSERT_EQ(v.getObject("object"), obj);
+    ASSERT_EQ(v.getArray("array"), arr);
+    ASSERT_EQ(v.getBool("bool"), true);
+    ASSERT_EQ(v.getInt("int"), 42);
+    ASSERT_EQ(v.getInt64("int"), (boost::int64_t)42);
+    ASSERT_EQ(v.getUInt64("int"), (boost::uint64_t)42);
+    ASSERT_EQ(v.getReal("realint"), 12.f);
 }
 
 // Test that get helpers *don't* get defaults when the values are available
@@ -478,14 +478,14 @@ void test_path_get_helpers_not_defaults() {
     const Object bad_obj = map_list_of("x", 4)("y", 5);
     const Array bad_arr = list_of(7)(8);
 
-    assert_eq(v.getString("string", "not a string"), "a string");
-    assert_eq(v.getObject("object", bad_obj), obj);
-    assert_eq(v.getArray("array", bad_arr), arr);
-    assert_eq(v.getBool("bool", false), true);
-    assert_eq(v.getInt("int", 0), 42);
-    assert_eq(v.getInt64("int", (boost::int64_t)0), (boost::int64_t)42);
-    assert_eq(v.getUInt64("int", (boost::uint64_t)0), (boost::uint64_t)42);
-    assert_eq(v.getReal("realint", 0.f), 12.f);
+    ASSERT_EQ(v.getString("string", "not a string"), "a string");
+    ASSERT_EQ(v.getObject("object", bad_obj), obj);
+    ASSERT_EQ(v.getArray("array", bad_arr), arr);
+    ASSERT_EQ(v.getBool("bool", false), true);
+    ASSERT_EQ(v.getInt("int", 0), 42);
+    ASSERT_EQ(v.getInt64("int", (boost::int64_t)0), (boost::int64_t)42);
+    ASSERT_EQ(v.getUInt64("int", (boost::uint64_t)0), (boost::uint64_t)42);
+    ASSERT_EQ(v.getReal("realint", 0.f), 12.f);
 }
 
 // Test defaults are retrieved when fields are not available
@@ -498,51 +498,51 @@ void test_path_get_helpers_defaults() {
     const Object default_obj = map_list_of("x", 4)("y", 5);
     const Array default_arr = list_of(7)(8);
 
-    assert_eq(v.getString("string", "not a string"), "not a string");
-    assert_eq(v.getObject("object", default_obj), default_obj);
-    assert_eq(v.getArray("array", default_arr), default_arr);
-    assert_eq(v.getBool("bool", false), false);
-    assert_eq(v.getInt("int", 0), 0);
-    assert_eq(v.getInt64("int", (boost::int64_t)0), (boost::int64_t)0);
-    assert_eq(v.getUInt64("int", (boost::uint64_t)0), (boost::uint64_t)0);
-    assert_eq(v.getReal("realint", 0.f), 0.f);
+    ASSERT_EQ(v.getString("string", "not a string"), "not a string");
+    ASSERT_EQ(v.getObject("object", default_obj), default_obj);
+    ASSERT_EQ(v.getArray("array", default_arr), default_arr);
+    ASSERT_EQ(v.getBool("bool", false), false);
+    ASSERT_EQ(v.getInt("int", 0), 0);
+    ASSERT_EQ(v.getInt64("int", (boost::int64_t)0), (boost::int64_t)0);
+    ASSERT_EQ(v.getUInt64("int", (boost::uint64_t)0), (boost::uint64_t)0);
+    ASSERT_EQ(v.getReal("realint", 0.f), 0.f);
 }
 
 void test_path_insert() {
     Object n;
     Value v1(n);
-    assert_eq( v1.type(), Value::OBJECT_TYPE);
+    ASSERT_EQ( v1.type(), Value::OBJECT_TYPE);
 
     bool inserted;
 
     // Single element path, integer
     inserted = v1.insert("a", 7);
-    assert_eq(inserted, true);
+    ASSERT_EQ(inserted, true);
     assert( v1.getObject().find("a") != v1.getObject().end());
-    assert_eq( v1.getObject()["a"].type(), Value::INT_TYPE );
-    assert_eq( v1.getObject()["a"].getInt(), 7);
+    ASSERT_EQ( v1.getObject()["a"].type(), Value::INT_TYPE );
+    ASSERT_EQ( v1.getObject()["a"].getInt(), 7);
 
     // Two element path, string
     inserted = v1.insert("b.cd", "XXX");
-    assert_eq(inserted, true);
+    ASSERT_EQ(inserted, true);
     assert( v1.getObject().find("b") != v1.getObject().end());
-    assert_eq( v1.getObject()["b"].type(), Value::OBJECT_TYPE );
+    ASSERT_EQ( v1.getObject()["b"].type(), Value::OBJECT_TYPE );
     assert( v1.getObject()["b"].getObject().find("cd") != v1.getObject()["b"].getObject().end());
-    assert_eq( v1.getObject()["b"].getObject()["cd"].type(), Value::STRING_TYPE);
-    assert_eq( v1.getObject()["b"].getObject()["cd"].getString(), "XXX");
+    ASSERT_EQ( v1.getObject()["b"].getObject()["cd"].type(), Value::STRING_TYPE);
+    ASSERT_EQ( v1.getObject()["b"].getObject()["cd"].getString(), "XXX");
 
     // Two elements, preserve previous elements
     inserted = v1.insert("b.e", "YYY");
-    assert_eq(inserted, true);
-    assert_eq( v1.getObject()["b"].getObject()["cd"].getString(), "XXX");
+    ASSERT_EQ(inserted, true);
+    ASSERT_EQ( v1.getObject()["b"].getObject()["cd"].getString(), "XXX");
     assert( v1.getObject()["b"].getObject().find("e") != v1.getObject()["b"].getObject().end());
-    assert_eq( v1.getObject()["b"].getObject()["e"].type(), Value::STRING_TYPE);
-    assert_eq( v1.getObject()["b"].getObject()["e"].getString(), "YYY");
+    ASSERT_EQ( v1.getObject()["b"].getObject()["e"].type(), Value::STRING_TYPE);
+    ASSERT_EQ( v1.getObject()["b"].getObject()["e"].getString(), "YYY");
 
     // Fail to insert over existing element
     inserted = v1.insert("b.e", "ZZZ");
-    assert_eq(inserted, false);
-    assert_eq( v1.getObject()["b"].getObject()["e"].getString(), "YYY");
+    ASSERT_EQ(inserted, false);
+    ASSERT_EQ( v1.getObject()["b"].getObject()["e"].getString(), "YYY");
 }
 
 void test_path_put() {
@@ -551,19 +551,19 @@ void test_path_put() {
 
     Object n;
     Value v1(n);
-    assert_eq( v1.type(), Value::OBJECT_TYPE);
+    ASSERT_EQ( v1.type(), Value::OBJECT_TYPE);
 
     // Prep some test data
     v1.put("b.e", "YYY");
     assert( v1.getObject()["b"].getObject().find("e") != v1.getObject()["b"].getObject().end());
-    assert_eq( v1.getObject()["b"].getObject()["e"].type(), Value::STRING_TYPE);
-    assert_eq( v1.getObject()["b"].getObject()["e"].getString(), "YYY");
+    ASSERT_EQ( v1.getObject()["b"].getObject()["e"].type(), Value::STRING_TYPE);
+    ASSERT_EQ( v1.getObject()["b"].getObject()["e"].getString(), "YYY");
 
     // Overwrite test
     v1.put("b.e", 2);
     assert( v1.getObject()["b"].getObject().find("e") != v1.getObject()["b"].getObject().end());
-    assert_eq( v1.getObject()["b"].getObject()["e"].type(), Value::INT_TYPE);
-    assert_eq( v1.getObject()["b"].getObject()["e"].getInt(), 2);
+    ASSERT_EQ( v1.getObject()["b"].getObject()["e"].type(), Value::INT_TYPE);
+    ASSERT_EQ( v1.getObject()["b"].getObject()["e"].getInt(), 2);
 }
 
 template<typename T>
@@ -572,7 +572,7 @@ void check_insert_path_error_exception(Value& v, const std::string& path, const 
         v.insert(path, val);
     }
     catch(const Value::PathError& e) {
-        assert_eq(expected_error, e);
+        ASSERT_EQ(expected_error, e);
         return;
     }
     assert(false);
@@ -642,7 +642,7 @@ void test_path_insert_error() {
             {
                 result.push_back( arr[i].template getValue< Cont_value_type>() );
             }
-            assert_eq( result, cont );
+            ASSERT_EQ( result, cont );
         }
     };
 
@@ -709,7 +709,7 @@ void test_path_insert_error() {
         {
             const Variant_t variant( t );
             const ValueType val( variant );
-            assert_eq( val.template getValue< T >(), t );
+            ASSERT_EQ( val.template getValue< T >(), t );
         }
 
         template< typename T, typename A, template< typename, typename > class Cont >
@@ -723,7 +723,7 @@ void test_path_insert_error() {
             {
                 result.push_back( arr[i].template getValue< T >() );
             }
-            assert_eq( result, cont );
+            ASSERT_EQ( result, cont );
         }
     };
 
@@ -753,42 +753,42 @@ void json_spirit::test_value()
     const char* str( "value" );
     Value value_str_2b ( str );
 
-    assert_eq( value_str, value_str );
-    assert_eq( value_str, value_str_2 );
-    assert_eq( value_str, value_str_2b );
-    assert_eq( value_obj, value_obj );
-    assert_eq( value_obj, value_obj_2 );
-    assert_neq( value_str, value_obj );
-    assert_neq( value_str, value_bool );
+    ASSERT_EQ( value_str, value_str );
+    ASSERT_EQ( value_str, value_str_2 );
+    ASSERT_EQ( value_str, value_str_2b );
+    ASSERT_EQ( value_obj, value_obj );
+    ASSERT_EQ( value_obj, value_obj_2 );
+    ASSERT_NEQ( value_str, value_obj );
+    ASSERT_NEQ( value_str, value_bool );
 
     Object obj_2;
     obj_2.insert( Object::value_type( "name", value_str ) );
     Value value_str_3( "xxxxx" );
     Value value_obj_3( obj_2 );
 
-    assert_neq( value_str, value_str_3 );
-    assert_neq( value_obj, value_obj_3 );
+    ASSERT_NEQ( value_str, value_str_3 );
+    ASSERT_NEQ( value_obj, value_obj_3 );
 
-    test_obj_value();
-    test_array_value();
-    test_bool_value();
-    test_int_value();
-    test_real_value();
-    test_null_value();
-    test_get_value();
-    test_copying();
-    test_obj_map_implemention();
-    test_is_uint64();
-    test_an_int_is_a_real();
-    test_wrong_type_exceptions();
-    test_path_contains();
-    test_path_get();
-    test_path_get_exceptions();
-    test_path_get_helpers();
-    test_path_insert();
-    test_path_put();
-    test_path_insert_error();
+    RUN_TEST(test_obj_value());
+    RUN_TEST(test_array_value());
+    RUN_TEST(test_bool_value());
+    RUN_TEST(test_int_value());
+    RUN_TEST(test_real_value());
+    RUN_TEST(test_null_value());
+    RUN_TEST(test_get_value());
+    RUN_TEST(test_copying());
+    RUN_TEST(test_obj_map_implemention());
+    RUN_TEST(test_is_uint64());
+    RUN_TEST(test_an_int_is_a_real());
+    RUN_TEST(test_wrong_type_exceptions());
+    RUN_TEST(test_path_contains());
+    RUN_TEST(test_path_get());
+    RUN_TEST(test_path_get_exceptions());
+    RUN_TEST(test_path_get_helpers());
+    RUN_TEST(test_path_insert());
+    RUN_TEST(test_path_put());
+    RUN_TEST(test_path_insert_error());
 #endif
-    test_container_constructor();
-    test_variant_constructor();
+    RUN_TEST(test_container_constructor());
+    RUN_TEST(test_variant_constructor());
 }

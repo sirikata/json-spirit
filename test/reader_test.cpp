@@ -33,7 +33,7 @@ namespace
 
         read_or_throw( s, value_2 );
 
-        assert_eq( value, value_2 );
+        ASSERT_EQ( value, value_2 );
     }
 
     template< class Config_type >
@@ -62,14 +62,14 @@ namespace
         {
             const typename Object_type::size_type size( obj_1.size() );
 
-            assert_eq( size, obj_2.size() );
+            ASSERT_EQ( size, obj_2.size() );
 
             typename Object_type::const_iterator i1 = obj_1.begin();
             typename Object_type::const_iterator i2 = obj_2.begin();
 
             for( ; i1 != obj_1.end(); ++i1, ++i2 )
             {
-                assert_eq( *i1, *i2 );
+                ASSERT_EQ( *i1, *i2 );
             }
         }
 
@@ -91,7 +91,7 @@ namespace
 
             const bool ok = read( str, value );
 
-            assert_eq( ok, expected_success  );
+            ASSERT_EQ( ok, expected_success  );
 
             try
             {
@@ -196,7 +196,7 @@ namespace
             // store a double value, so the reencoded version is shorter)
             if (same_rewritten) {
                 const String_type result = write_formatted( value );
-                assert_eq( in_s, result );
+                ASSERT_EQ( in_s, result );
             }
         }
 
@@ -458,18 +458,18 @@ namespace
 
             const bool ok = read( is, value );
 
-            assert_eq( ok, true );
-            assert_eq( value.type(), ValueType::ARRAY_TYPE );
+            ASSERT_EQ( ok, true );
+            ASSERT_EQ( value.type(), ValueType::ARRAY_TYPE );
 
             const Array_type arr = value.getArray();
 
-            assert_eq( arr.size(), (unsigned int)6 );
-            assert_eq( arr[0].getReal(), 1.200000000000000, 1e-16 );
-            assert_eq( arr[1].getReal(), 1.234567890123456e+125, 1e+110 );
-            assert_eq( arr[2].getReal(), -1.234000000000000e-123, 1e+108 );
-            assert_eq( arr[3].getReal(), 1.000000000000000e-123, 1e+108 );
-            assert_eq( arr[4].getReal(), 1234567890.123456, 1e-7 );
-            assert_eq( arr[5].getReal(), 123.0, 1e-13 );
+            ASSERT_EQ( arr.size(), (unsigned int)6 );
+            ASSERT_FLOAT_EQ( arr[0].getReal(), 1.200000000000000, 1e-16 );
+            ASSERT_FLOAT_EQ( arr[1].getReal(), 1.234567890123456e+125, 1e+110 );
+            ASSERT_FLOAT_EQ( arr[2].getReal(), -1.234000000000000e-123, 1e+108 );
+            ASSERT_FLOAT_EQ( arr[3].getReal(), 1.000000000000000e-123, 1e+108 );
+            ASSERT_FLOAT_EQ( arr[4].getReal(), 1234567890.123456, 1e-7 );
+            ASSERT_FLOAT_EQ( arr[5].getReal(), 123.0, 1e-13 );
         }
 
         void test_from_stream( const char* json_str, bool expected_success,
@@ -483,11 +483,11 @@ namespace
 
             const bool ok = read( is, value );
 
-            assert_eq( ok, expected_success );
+            ASSERT_EQ( ok, expected_success );
 
             if( ok )
             {
-                assert_eq( in_s, write( value ) );
+                ASSERT_EQ( in_s, write( value ) );
             }
 
             try
@@ -496,13 +496,13 @@ namespace
 
                 read_or_throw( is, value );
 
-                assert_eq( expected_success, true );
+                ASSERT_EQ( expected_success, true );
 
-                assert_eq( in_s, write( value ) );
+                ASSERT_EQ( in_s, write( value ) );
             }
             catch( const ParseError error )
             {
-                assert_eq( error, expected_error );
+                ASSERT_EQ( error, expected_error );
             }
         }
 
@@ -522,8 +522,8 @@ namespace
 
             const Pair_type& pair( *value.getObject().begin() );
 
-            assert_eq( Config_type::get_name ( pair ), to_str( c_str ) );
-            assert_eq( Config_type::get_value( pair ), to_str( c_str ) );
+            ASSERT_EQ( Config_type::get_name ( pair ), to_str( c_str ) );
+            ASSERT_EQ( Config_type::get_value( pair ), to_str( c_str ) );
         }
 
         void test_escape_chars()
@@ -545,7 +545,7 @@ namespace
 
         void check_is_null( const char* c_str  )
         {
-            assert_eq( read_cstr( c_str ).type(), ValueType::NULL_TYPE );
+            ASSERT_EQ( read_cstr( c_str ).type(), ValueType::NULL_TYPE );
         }
 
         template< typename T >
@@ -553,7 +553,7 @@ namespace
         {
             const ValueType v( read_cstr( c_str ) );
 
-            assert_eq( v.template getValue< T >(), expected_value );
+            ASSERT_EQ( v.template getValue< T >(), expected_value );
         }
 
         void test_values()
@@ -578,7 +578,7 @@ namespace
             }
             catch( const ParseError posn )
             {
-                assert_eq( posn, ParseError( line, column, reason ) );
+                ASSERT_EQ( posn, ParseError( line, column, reason ) );
             }
         }
 
@@ -620,12 +620,12 @@ namespace
 
                 read_or_throw( first_, last, value_ );
 
-                assert_eq( ok, true );
-                assert_eq( value, value_ );
+                ASSERT_EQ( ok, true );
+                ASSERT_EQ( value, value_ );
             }
             catch( ... )
             {
-                assert_eq( ok, false );
+                ASSERT_EQ( ok, false );
             }
 
             return ok;
@@ -639,16 +639,16 @@ namespace
             {
                 const bool ok = test_read_range( first, last, value );
 
-                assert_eq( ok, true );
+                ASSERT_EQ( ok, true );
 
                 const bool is_last( i == expected_values.size() - 1 );
 
-                assert_eq( first == last, is_last ? all_input_consumed : false );
+                ASSERT_EQ( first == last, is_last ? all_input_consumed : false );
             }
 
             const bool ok = test_read_range( first, last, value );
 
-            assert_eq( ok, false );
+            ASSERT_EQ( ok, false );
         }
 
         void check_value_sequence( Istream_type& is, const Ints& expected_values, bool all_input_consumed )
@@ -659,11 +659,11 @@ namespace
             {
                 read_or_throw( is, value );
 
-                assert_eq( value.getInt(), expected_values[i] );
+                ASSERT_EQ( value.getInt(), expected_values[i] );
 
                 const bool is_last( i == expected_values.size() - 1 );
 
-                assert_eq( is.eof(), is_last ? all_input_consumed : false );
+                ASSERT_EQ( is.eof(), is_last ? all_input_consumed : false );
             }
 
             try
@@ -676,7 +676,7 @@ namespace
             {
             }
 
-            assert_eq( is.eof(), true );
+            ASSERT_EQ( is.eof(), true );
         }
 
         void check_value_sequence( const char* c_str, const Ints& expected_values, bool all_input_consumed )
@@ -692,18 +692,18 @@ namespace
 
         void check_array( const ValueType& value, typename Array_type::size_type expected_size )
         {
-            assert_eq( value.type(), ValueType::ARRAY_TYPE );
+            ASSERT_EQ( value.type(), ValueType::ARRAY_TYPE );
 
             const Array_type& arr = value.getArray();
 
-            assert_eq( arr.size(), expected_size );
+            ASSERT_EQ( arr.size(), expected_size );
 
             for( typename Array_type::size_type i = 0; i < expected_size; ++i )
             {
                 const ValueType& val = arr[i];
 
-                assert_eq( val.type(), ValueType::INT_TYPE );
-                assert_eq( val.getInt(), int( i + 1 ) );
+                ASSERT_EQ( val.type(), ValueType::INT_TYPE );
+                ASSERT_EQ( val.getInt(), int( i + 1 ) );
             }
         }
 
@@ -766,9 +766,9 @@ namespace
         {
             const ValueType v( read_cstr( value_str ) );
 
-            assert_eq( v.getInt(),    expected_int );
-            assert_eq( v.getInt64(),  expected_int64 );
-            assert_eq( v.getUInt64(), expected_uint64 );
+            ASSERT_EQ( v.getInt(),    expected_int );
+            ASSERT_EQ( v.getInt64(),  expected_int64 );
+            ASSERT_EQ( v.getUInt64(), expected_uint64 );
         }
 
         void test_uint64()
@@ -785,33 +785,33 @@ namespace
 
             read( to_str( "[ \"foo\", true, false, 1, 12.3, null ]" ), value );
 
-            assert_eq( value.type(), ValueType::ARRAY_TYPE );
+            ASSERT_EQ( value.type(), ValueType::ARRAY_TYPE );
 
             const Array_type& a = value.getArray();
 
-            assert_eq( a[0].getString(), to_str( "foo" ) );
-            assert_eq( a[1].getBool(), true );
-            assert_eq( a[2].getBool(), false );
-            assert_eq( a[3].getInt(), 1 );
-            assert_eq( a[3].getInt64(), 1 );
-            assert_eq( a[3].getUInt64(), 1u );
-            assert_eq( a[3].getReal(), 1.0 );
-            assert_eq( a[4].getReal(), 12.3 );
-            assert_eq( a[5].isNull(), true );
+            ASSERT_EQ( a[0].getString(), to_str( "foo" ) );
+            ASSERT_EQ( a[1].getBool(), true );
+            ASSERT_EQ( a[2].getBool(), false );
+            ASSERT_EQ( a[3].getInt(), 1 );
+            ASSERT_EQ( a[3].getInt64(), 1 );
+            ASSERT_EQ( a[3].getUInt64(), 1u );
+            ASSERT_EQ( a[3].getReal(), 1.0 );
+            ASSERT_EQ( a[4].getReal(), 12.3 );
+            ASSERT_EQ( a[5].isNull(), true );
         }
 
         void run_tests()
         {
-            test_syntax();
-            test_reading();
-            test_reading_reals();
-            test_from_stream();
-            test_escape_chars();
-            test_values();
-            test_error_cases();
-            test_sequence_of_values();
-            test_uint64();
-            test_types();
+            RUN_TEST(test_syntax());
+            RUN_TEST(test_reading());
+            RUN_TEST(test_reading_reals());
+            RUN_TEST(test_from_stream());
+            RUN_TEST(test_escape_chars());
+            RUN_TEST(test_values());
+            RUN_TEST(test_error_cases());
+            RUN_TEST(test_sequence_of_values());
+            RUN_TEST(test_uint64());
+            RUN_TEST(test_types());
         }
     };
 
@@ -824,8 +824,8 @@ namespace
 
         const wstring s( value.getArray()[0].getString() );
 
-        assert_eq( s.length(), static_cast< wstring::size_type >( 1u ) );
-        assert_eq( s[0], 0xABCD );
+        ASSERT_EQ( s.length(), static_cast< wstring::size_type >( 1u ) );
+        ASSERT_EQ( s[0], 0xABCD );
     }
 #endif
 
@@ -836,7 +836,7 @@ namespace
 
         test_read( "[\"" + s + "\"]", value );
 
-        assert_eq( value.getArray()[0].getString(), "äöüß" );
+        ASSERT_EQ( value.getArray()[0].getString(), "äöüß" );
     }
 
     void test_extended_ascii()
@@ -852,12 +852,14 @@ namespace
 void json_spirit::test_reader()
 {
 #ifdef JSON_SPIRIT_VALUE_ENABLED
+    printf("reader_test: Config\n");
     Test_runner< Config >().run_tests();
-    test_extended_ascii();
+    RUN_TEST(test_extended_ascii());
 #endif
 #if defined( JSON_SPIRIT_WVALUE_ENABLED ) && !defined( BOOST_NO_STD_WSTRING )
+    printf("reader_test: Config\n");
     Test_runner< wConfig >().run_tests();
-    test_wide_esc_u();
+    RUN_TEST(test_wide_esc_u());
 #endif
 
 
