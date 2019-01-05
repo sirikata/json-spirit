@@ -10,6 +10,33 @@ IF(NOT PROJECT_DIR)
 ENDIF()
 GET_FILENAME_COMPONENT(PROJECT_DIR ${PROJECT_DIR} ABSOLUTE)
 
+################
+# C++ 11 support
+################
+MACRO(USE_CXX11)
+  IF(CMAKE_VERSION VERSION_LESS "3.1")
+    IF(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+      MESSAGE("Using C++11 standard flag for GNU compiler, CMake < 3.1")
+      SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=gnu++11")
+    ELSE()
+      MESSAGE("Unhandled C++11 flag for CMake < 3.1")
+    ENDIF()
+  ELSE()
+    MESSAGE("Using C++11 standard for CMAKE_CXX_STANDARD")
+    SET(CMAKE_CXX_STANDARD 11)
+  ENDIF()
+ENDMACRO(USE_CXX11)
+
+IF(NOT DEFINED JSON_SPIRIT_CXX11)
+  SET(JSON_SPIRIT_CXX11 FALSE CACHE BOOL "If enabled, use C++11 to build json-spirit.")
+ELSE()
+  SET(JSON_SPIRIT_CXX11 ${JSON_SPIRIT_CXX11} CACHE BOOL "If enabled, use C++11 to build json-spirit.")
+ENDIF()
+
+IF(JSON_SPIRIT_CXX11)
+  USE_CXX11()
+ENDIF()
+
 ###################################
 # Global platform-specific settings
 ###################################
@@ -19,7 +46,7 @@ IF(WIN32)
     ADD_DEFINITIONS(-DBOOST_ALL_DYN_LINK)
   ENDIF(NOT Boost_USE_STATIC_LIBS)
 
-  SET(CMAKE_CXX_FLAGS "-D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS")
+  SET(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -D_CRT_SECURE_NO_WARNINGS -D_SCL_SECURE_NO_WARNINGS")
 ELSE()
   SET(ADDED_DEFINITIONS -Wall -Wno-unused-function -Wno-unused-variable -fvisibility=hidden -fPIC -Wnon-virtual-dtor -Wreorder -Wstrict-null-sentinel -Wsign-promo)
 ENDIF()
