@@ -80,7 +80,7 @@ namespace
 
         void add_c_str( Object_type& obj, const char* c_name, const char* c_value )
         {
-            add_value( obj, c_name, to_str( c_value ) );
+            LOG_TEST(add_value( obj, c_name, to_str( c_value ) ));
         }
 
         void test_syntax( const char* c_str, bool expected_success = true )
@@ -126,61 +126,61 @@ namespace
 
         void test_syntax()
         {
-            test_syntax( "{}" );
-            test_syntax( "{ }" );
-            test_syntax( "{ } " );
-            test_syntax( "{ }  " );
-            test_syntax( "{\"\":\"\"}" );
-            test_syntax( "{\"test\":\"123\"}" );
-            test_syntax( "{\"test\" : \"123\"}" );
-            test_syntax( "{\"testing testing testing\":\"123\"}" );
-            test_syntax( "{\"\":\"abc\"}" );
-            test_syntax( "{\"abc\":\"\"}" );
-            test_syntax( "{\"\":\"\"}" );
-            test_syntax( "{\"test\":true}" );
-            test_syntax( "{\"test\":false}" );
-            test_syntax( "{\"test\":null}" );
-            test_syntax( "{\"test1\":\"123\",\"test2\":\"456\"}" );
-            test_syntax( "{\"test1\":\"123\",\"test2\":\"456\",\"test3\":\"789\"}" );
-            test_syntax( "{\"test1\":{\"test2\":\"123\",\"test3\":\"456\"}}" );
-            test_syntax( "{\"test1\":{\"test2\":{\"test3\":\"456\"}}}" );
-            test_syntax( "{\"test1\":[\"a\",\"bb\",\"cc\"]}" );
-            test_syntax( "{\"test1\":[true,false,null]}" );
-            test_syntax( "{\"test1\":[true,\"abc\",{\"a\":\"b\"},{\"d\":false},null]}" );
-            test_syntax( "{\"test1\":[1,2,-3]}" );
-            test_syntax( "{\"test1\":[1.1,2e4,-1.234e-34]}" );
-            test_syntax( "{\n"
+            LOG_TEST(test_syntax( "{}" ));
+            LOG_TEST(test_syntax( "{ }" ));
+            LOG_TEST(test_syntax( "{ } " ));
+            LOG_TEST(test_syntax( "{ }  " ));
+            LOG_TEST(test_syntax( "{\"\":\"\"}" ));
+            LOG_TEST(test_syntax( "{\"test\":\"123\"}" ));
+            LOG_TEST(test_syntax( "{\"test\" : \"123\"}" ));
+            LOG_TEST(test_syntax( "{\"testing testing testing\":\"123\"}" ));
+            LOG_TEST(test_syntax( "{\"\":\"abc\"}" ));
+            LOG_TEST(test_syntax( "{\"abc\":\"\"}" ));
+            LOG_TEST(test_syntax( "{\"\":\"\"}" ));
+            LOG_TEST(test_syntax( "{\"test\":true}" ));
+            LOG_TEST(test_syntax( "{\"test\":false}" ));
+            LOG_TEST(test_syntax( "{\"test\":null}" ));
+            LOG_TEST(test_syntax( "{\"test1\":\"123\",\"test2\":\"456\"}" ));
+            LOG_TEST(test_syntax( "{\"test1\":\"123\",\"test2\":\"456\",\"test3\":\"789\"}" ));
+            LOG_TEST(test_syntax( "{\"test1\":{\"test2\":\"123\",\"test3\":\"456\"}}" ));
+            LOG_TEST(test_syntax( "{\"test1\":{\"test2\":{\"test3\":\"456\"}}}" ));
+            LOG_TEST(test_syntax( "{\"test1\":[\"a\",\"bb\",\"cc\"]}" ));
+            LOG_TEST(test_syntax( "{\"test1\":[true,false,null]}" ));
+            LOG_TEST(test_syntax( "{\"test1\":[true,\"abc\",{\"a\":\"b\"},{\"d\":false},null]}" ));
+            LOG_TEST(test_syntax( "{\"test1\":[1,2,-3]}" ));
+            LOG_TEST(test_syntax( "{\"test1\":[1.1,2e4,-1.234e-34]}" ));
+            LOG_TEST(test_syntax( "{\n"
                           "\t\"test1\":\n"
                           "\t\t{\n"
                           "\t\t\t\"test2\":\"123\",\n"
                           "\t\t\t\"test3\":\"456\"\n"
                           "\t\t}\n"
-                          "}\n" );
-            test_syntax( "[]" );
-            test_syntax( "[ ]" );
-            test_syntax( "[1,2,3]" );
-            test_syntax( "[ 1, -2, 3]" );
-            test_syntax( "[ 1.2, -2e6, -3e-6 ]" );
-            test_syntax( "[ 1.2, \"str\", -3e-6, { \"field\" : \"data\" } ]" );
+                          "}\n" ));
+            LOG_TEST(test_syntax( "[]" ));
+            LOG_TEST(test_syntax( "[ ]" ));
+            LOG_TEST(test_syntax( "[1,2,3]" ));
+            LOG_TEST(test_syntax( "[ 1, -2, 3]" ));
+            LOG_TEST(test_syntax( "[ 1.2, -2e6, -3e-6 ]" ));
+            LOG_TEST(test_syntax( "[ 1.2, \"str\", -3e-6, { \"field\" : \"data\" } ]" ));
 
-            test_syntax( INT_MIN, INT_MAX );
-            test_syntax( LLONG_MIN, LLONG_MAX );
-            test_syntax( 0, ULLONG_MAX );
-            test_syntax( "[1 2 3]", false );
+            LOG_TEST(test_syntax( INT_MIN, INT_MAX ));
+            LOG_TEST(test_syntax( LLONG_MIN, LLONG_MAX ));
+            LOG_TEST(test_syntax( 0, ULLONG_MAX ));
+            LOG_TEST(test_syntax( "[1 2 3]", false ));
         }
 
         ValueType read_cstr( const char* c_str )
         {
             ValueType value;
 
-            test_read( to_str( c_str ), value );
+            LOG_TEST(test_read( to_str( c_str ), value ));
 
             return value;
         }
 
         void read_cstr( const char* c_str, ValueType& value )
         {
-            test_read( to_str( c_str ), value );
+            LOG_TEST(test_read( to_str( c_str ), value ));
         }
 
         void check_reading( const char* c_str, bool same_rewritten = true)
@@ -189,7 +189,7 @@ namespace
 
             String_type in_s( to_str( c_str ) );
 
-            test_read( in_s, value );
+            LOG_TEST(test_read( in_s, value ));
 
             // We need to exempt some because the reencoding is different
             // (e.g. because the input has more precision than necessary to
@@ -210,7 +210,7 @@ namespace
                    "    " << max_int << "\n"
                    "]";
 
-            check_reading( os.str().c_str() );
+            LOG_TEST(check_reading( os.str().c_str() ));
         }
 
         void check_reading( unsigned long long min_ullong, unsigned long long max_ullong )
@@ -222,12 +222,12 @@ namespace
                    "    " << max_ullong << "\n"
                    "]";
 
-            check_reading( os.str().c_str() );
+            LOG_TEST(check_reading( os.str().c_str() ));
         }
 
         void test_reading()
         {
-            check_reading( "{\n}" );
+            LOG_TEST(check_reading( "{\n}" ));
 
             Object_type obj;
             ValueType value;
@@ -528,19 +528,19 @@ namespace
 
         void test_escape_chars()
         {
-            test_escape_chars( "\\t", "\t");
-            test_escape_chars( "a\\t", "a\t" );
-            test_escape_chars( "\\tb", "\tb" );
-            test_escape_chars( "a\\tb", "a\tb" );
-            test_escape_chars( "a\\tb", "a\tb" );
-            test_escape_chars( "a123\\tb", "a123\tb" );
-            test_escape_chars( "\\t\\n\\\\", "\t\n\\" );
-            test_escape_chars( "\\/\\r\\b\\f\\\"", "/\r\b\f\"" );
-            test_escape_chars( "\\h\\j\\k", "" ); // invalid esc chars
-            test_escape_chars( "\\x61\\x62\\x63", "abc" );
-            test_escape_chars( "a\\x62c", "abc" );
-            test_escape_chars( "\\x01\\x02\\x7F", "\x01\x02\x7F" ); // NB x7F is the greatest char spirit will parse
-            test_escape_chars( "\\u0061\\u0062\\u0063", "abc" );
+            LOG_TEST(test_escape_chars( "\\t", "\t"));
+            LOG_TEST(test_escape_chars( "a\\t", "a\t" ));
+            LOG_TEST(test_escape_chars( "\\tb", "\tb" ));
+            LOG_TEST(test_escape_chars( "a\\tb", "a\tb" ));
+            LOG_TEST(test_escape_chars( "a\\tb", "a\tb" ));
+            LOG_TEST(test_escape_chars( "a123\\tb", "a123\tb" ));
+            LOG_TEST(test_escape_chars( "\\t\\n\\\\", "\t\n\\" ));
+            LOG_TEST(test_escape_chars( "\\/\\r\\b\\f\\\"", "/\r\b\f\"" ));
+            LOG_TEST(test_escape_chars( "\\h\\j\\k", "" )); // invalid esc chars
+            LOG_TEST(test_escape_chars( "\\x61\\x62\\x63", "abc" ));
+            LOG_TEST(test_escape_chars( "a\\x62c", "abc" ));
+            LOG_TEST(test_escape_chars( "\\x01\\x02\\x7F", "\x01\x02\x7F" )); // NB x7F is the greatest char spirit will parse
+            LOG_TEST(test_escape_chars( "\\u0061\\u0062\\u0063", "abc" ));
         }
 
         void check_is_null( const char* c_str  )
@@ -558,12 +558,12 @@ namespace
 
         void test_values()
         {
-            check_value( "1",        1 );
-            check_value( "1.5",      1.5 );
-            check_value( "\"Test\"", to_str( "Test" ) );
-            check_value( "true",     true );
-            check_value( "false",    false );
-            check_is_null( "null" );
+            LOG_TEST(check_value( "1",        1 ));
+            LOG_TEST(check_value( "1.5",      1.5 ));
+            LOG_TEST(check_value( "\"Test\"", to_str( "Test" ) ));
+            LOG_TEST(check_value( "true",     true ));
+            LOG_TEST(check_value( "false",    false ));
+            LOG_TEST(check_is_null( "null" ));
         }
 
         void check_read_fails( const char* c_str, int line, int column, const string& reason )
@@ -584,26 +584,26 @@ namespace
 
         void test_error_cases()
         {
-            check_read_fails( "",                       1, 1,  "not a value" );
-            check_read_fails( "foo",                    1, 1,  "not a value" );
-            check_read_fails( " foo",                   1, 2,  "not a value" );
-            check_read_fails( "  foo",                  1, 3,  "not a value" );
-            check_read_fails( "\n\n foo",               3, 2,  "not a value" );
-            check_read_fails( "!!!",                    1, 1,  "not a value" );
-            check_read_fails( "\"bar",                  1, 1,  "not a value" );
-            check_read_fails( "bar\"",                  1, 1,  "not a value" );
-            check_read_fails( "[1}",                    1, 3,  "not an array" );
-            check_read_fails( "[1,2?",                  1, 5,  "not an array" );
-            check_read_fails( "[1,2}",                  1, 5,  "not an array" );
-            check_read_fails( "[1;2]",                  1, 3,  "not an array" );
-            check_read_fails( "[1,\n2,\n3,]",           3, 2,  "not an array" );
-            check_read_fails( "{\"name\":\"value\"]",   1, 16, "not an object" );
-            check_read_fails( "{\"name\",\"value\"}",   1, 8,  "no colon in pair" );
-            check_read_fails( "{name:\"value\"}",       1, 2,  "not an object" );
-            check_read_fails( "{\n1:\"value\"}",        2, 1,  "not an object" );
-            check_read_fails( "{\n  name\":\"value\"}", 2, 3,  "not an object" );
-            check_read_fails( "{\"name\":foo}",         1, 9,  "not a value" );
-            check_read_fails( "{\"name\":value\"}",     1, 9,  "not a value" );
+            LOG_TEST(check_read_fails( "",                       1, 1,  "not a value" ));
+            LOG_TEST(check_read_fails( "foo",                    1, 1,  "not a value" ));
+            LOG_TEST(check_read_fails( " foo",                   1, 2,  "not a value" ));
+            LOG_TEST(check_read_fails( "  foo",                  1, 3,  "not a value" ));
+            LOG_TEST(check_read_fails( "\n\n foo",               3, 2,  "not a value" ));
+            LOG_TEST(check_read_fails( "!!!",                    1, 1,  "not a value" ));
+            LOG_TEST(check_read_fails( "\"bar",                  1, 1,  "not a value" ));
+            LOG_TEST(check_read_fails( "bar\"",                  1, 1,  "not a value" ));
+            LOG_TEST(check_read_fails( "[1}",                    1, 3,  "not an array" ));
+            LOG_TEST(check_read_fails( "[1,2?",                  1, 5,  "not an array" ));
+            LOG_TEST(check_read_fails( "[1,2}",                  1, 5,  "not an array" ));
+            LOG_TEST(check_read_fails( "[1;2]",                  1, 3,  "not an array" ));
+            LOG_TEST(check_read_fails( "[1,\n2,\n3,]",           3, 2,  "not an array" ));
+            LOG_TEST(check_read_fails( "{\"name\":\"value\"]",   1, 16, "not an object" ));
+            LOG_TEST(check_read_fails( "{\"name\",\"value\"}",   1, 8,  "no colon in pair" ));
+            LOG_TEST(check_read_fails( "{name:\"value\"}",       1, 2,  "not an object" ));
+            LOG_TEST(check_read_fails( "{\n1:\"value\"}",        2, 1,  "not an object" ));
+            LOG_TEST(check_read_fails( "{\n  name\":\"value\"}", 2, 3,  "not an object" ));
+            LOG_TEST(check_read_fails( "{\"name\":foo}",         1, 9,  "not a value" ));
+            LOG_TEST(check_read_fails( "{\"name\":value\"}",     1, 9,  "not a value" ));
         }
 
         typedef vector< int > Ints;
@@ -713,7 +713,7 @@ namespace
 
             test_read_range( begin, end, value );
 
-            check_array( value, expected_size );
+            LOG_TEST(check_array( value, expected_size ));
         }
 
         void check_reading_array( Istream_type& is, typename Array_type::size_type expected_size )
@@ -722,7 +722,7 @@ namespace
 
             read( is, value );
 
-            check_array( value, expected_size );
+            LOG_TEST(check_array( value, expected_size ));
         }
 
         void check_reading_arrays( const char* arrays_str )
@@ -732,33 +732,33 @@ namespace
             Iter_type       begin = str.begin();
             const Iter_type end   = str.end();
 
-            check_reading_array( begin, end, 0 );
-            check_reading_array( begin, end, 1 );
-            check_reading_array( begin, end, 2 );
-            check_reading_array( begin, end, 3 );
+            LOG_TEST(check_reading_array( begin, end, 0 ));
+            LOG_TEST(check_reading_array( begin, end, 1 ));
+            LOG_TEST(check_reading_array( begin, end, 2 ));
+            LOG_TEST(check_reading_array( begin, end, 3 ));
 
             Istringstream_type is( str );
 
-            check_reading_array( is, 0 );
-            check_reading_array( is, 1 );
-            check_reading_array( is, 2 );
-            check_reading_array( is, 3 );
+            LOG_TEST(check_reading_array( is, 0 ));
+            LOG_TEST(check_reading_array( is, 1 ));
+            LOG_TEST(check_reading_array( is, 2 ));
+            LOG_TEST(check_reading_array( is, 3 ));
         }
 
         void test_sequence_of_values()
         {
-            check_value_sequence( "",   Ints(), false );
-            check_value_sequence( " ",  Ints(), false );
-            check_value_sequence( "  ", Ints(), false );
-            check_value_sequence( "     10 ",      list_of( 10 ), false );
-            check_value_sequence( "     10 11 ",   list_of( 10 )( 11 ), false );
-            check_value_sequence( "     10 11 12", list_of( 10 )( 11 )( 12 ), true);
-            check_value_sequence( "10 11 12",      list_of( 10 )( 11 )( 12 ), true);
+            LOG_TEST(check_value_sequence( "",   Ints(), false ));
+            LOG_TEST(check_value_sequence( " ",  Ints(), false ));
+            LOG_TEST(check_value_sequence( "  ", Ints(), false ));
+            LOG_TEST(check_value_sequence( "     10 ",      list_of( 10 ), false ));
+            LOG_TEST(check_value_sequence( "     10 11 ",   list_of( 10 )( 11 ), false ));
+            LOG_TEST(check_value_sequence( "     10 11 12", list_of( 10 )( 11 )( 12 ), true));
+            LOG_TEST(check_value_sequence( "10 11 12",      list_of( 10 )( 11 )( 12 ), true));
 
             //
 
-            check_reading_arrays( "[] [ 1 ] [ 1, 2 ] [ 1, 2, 3 ]" );
- //         check_reading_arrays( "[][1][1,2][1,2,3]" );  // fails due to multi_pass iterator bug,
+            LOG_TEST(check_reading_arrays( "[] [ 1 ] [ 1, 2 ] [ 1, 2, 3 ]" ));
+ //         LOG_TEST(check_reading_arrays( "[][1][1,2][1,2,3]" ));  // fails due to multi_pass iterator bug,
                                                           // use stream_reader class instead
         }
 
@@ -773,10 +773,10 @@ namespace
 
         void test_uint64()
         {
-            test_uint64( "0", 0, 0, 0 );
-            test_uint64( "1", 1, 1, 1 );
-            test_uint64( "-1", -1, -1, ULLONG_MAX );
-            test_uint64( "18446744073709551615", -1, -1, ULLONG_MAX );
+            LOG_TEST(test_uint64( "0", 0, 0, 0 ));
+            LOG_TEST(test_uint64( "1", 1, 1, 1 ));
+            LOG_TEST(test_uint64( "-1", -1, -1, ULLONG_MAX ));
+            LOG_TEST(test_uint64( "18446744073709551615", -1, -1, ULLONG_MAX ));
         }
 
         void test_types()
@@ -820,7 +820,7 @@ namespace
     {
         wValue value;
 
-        test_read( L"[\"\\uABCD\"]", value );
+        LOG_TEST(test_read( L"[\"\\uABCD\"]", value ));
 
         const wstring s( value.getArray()[0].getString() );
 
@@ -834,15 +834,15 @@ namespace
     {
         Value value;
 
-        test_read( "[\"" + s + "\"]", value );
+        LOG_TEST(test_read( "[\"" + s + "\"]", value ));
 
         ASSERT_EQ( value.getArray()[0].getString(), "äöüß" );
     }
 
     void test_extended_ascii()
     {
-        test_extended_ascii( "\\u00E4\\u00F6\\u00FC\\u00DF" );
-        test_extended_ascii( "äöüß" );
+        LOG_TEST(test_extended_ascii( "\\u00E4\\u00F6\\u00FC\\u00DF" ));
+        LOG_TEST(test_extended_ascii( "äöüß" ));
     }
 #endif
 }

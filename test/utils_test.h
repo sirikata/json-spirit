@@ -15,8 +15,15 @@
 #include <cstdio>
 
 #define RUN_TEST(name) \
-  printf("Running %s\n", #name); \
+  printf("Running %s (%s:%d)\n", #name, __FILE__, __LINE__);     \
   name
+
+#define LOG_TEST(name) \
+  printf(" %s (%s:%d)\n", #name, __FILE__, __LINE__);    \
+  name
+
+#define LOG_TEMPLATE_TEST() \
+  printf(" -- (%s:%d)\n", __FILE__, __LINE__);
 
 // these functions allow you to inspect the values that caused a test to fail
 

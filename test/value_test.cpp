@@ -241,18 +241,18 @@ namespace
             assert_obj_eq( v2, obj_1 );
         }
         {
-            check_copy( 1 );
-            check_copy( 2.0 );
-            check_copy( max_int64 );
-            check_copy( max_uint64 );
-            check_copy( string("test") );
-            check_copy( true );
-            check_copy( false );
+            LOG_TEST(check_copy( 1 ));
+            LOG_TEST(check_copy( 2.0 ));
+            LOG_TEST(check_copy( max_int64 ));
+            LOG_TEST(check_copy( max_uint64 ));
+            LOG_TEST(check_copy( string("test") ));
+            LOG_TEST(check_copy( true ));
+            LOG_TEST(check_copy( false ));
             const Array array_1 = list_of(1)(2);
-            check_copy( array_1 );
+            LOG_TEST(check_copy( array_1 ));
             const Object obj_1 = map_list_of( "a", 1 )( "b", 2 );
-            check_copy( obj_1 );
-            check_copying_null();
+            LOG_TEST(check_copy( obj_1 ));
+            LOG_TEST(check_copying_null());
         }
     }
 
@@ -296,9 +296,9 @@ namespace
 
     void test_is_uint64()
     {
-        check_an_int_is_a_real( 1,                            false );
-        check_an_int_is_a_real( static_cast< int64_t  >( 1 ), false );
-        check_an_int_is_a_real( static_cast< uint64_t >( 1 ), true );
+        LOG_TEST(check_an_int_is_a_real( 1,                            false ));
+        LOG_TEST(check_an_int_is_a_real( static_cast< int64_t  >( 1 ), false ));
+        LOG_TEST(check_an_int_is_a_real( static_cast< uint64_t >( 1 ), true ));
     }
 
     template< typename Int >
@@ -309,11 +309,11 @@ namespace
 
     void test_an_int_is_a_real()
     {
-        check_an_int_is_a_real( -1, -1.0 );
-        check_an_int_is_a_real(  0,  0.0 );
-        check_an_int_is_a_real(  1,  1.0 );
-        check_an_int_is_a_real( max_int64,  9223372036854775800.0 );
-        check_an_int_is_a_real( max_uint64, 18446744073709552000.0 );
+        LOG_TEST(check_an_int_is_a_real( -1, -1.0 ));
+        LOG_TEST(check_an_int_is_a_real(  0,  0.0 ));
+        LOG_TEST(check_an_int_is_a_real(  1,  1.0 ));
+        LOG_TEST(check_an_int_is_a_real( max_int64,  9223372036854775800.0 ));
+        LOG_TEST(check_an_int_is_a_real( max_uint64, 18446744073709552000.0 ));
     }
 
     template< typename T >
@@ -341,13 +341,13 @@ namespace
 
     void test_wrong_type_exceptions()
     {
-        check_wrong_type_exceptions< Object >( Value::OBJECT_TYPE );
-        check_wrong_type_exceptions< Array >( Value::ARRAY_TYPE );
-        check_wrong_type_exceptions< string >( Value::STRING_TYPE );
-        check_wrong_type_exceptions< bool >( Value::BOOL_TYPE );
-        check_wrong_type_exceptions< boost::int64_t >( Value::INT_TYPE );
-        check_wrong_type_exceptions< int >( Value::INT_TYPE );
-        check_wrong_type_exceptions< double >( Value::REAL_TYPE );
+        LOG_TEST(check_wrong_type_exceptions< Object >( Value::OBJECT_TYPE ));
+        LOG_TEST(check_wrong_type_exceptions< Array >( Value::ARRAY_TYPE ));
+        LOG_TEST(check_wrong_type_exceptions< string >( Value::STRING_TYPE ));
+        LOG_TEST(check_wrong_type_exceptions< bool >( Value::BOOL_TYPE ));
+        LOG_TEST(check_wrong_type_exceptions< boost::int64_t >( Value::INT_TYPE ));
+        LOG_TEST(check_wrong_type_exceptions< int >( Value::INT_TYPE ));
+        LOG_TEST(check_wrong_type_exceptions< double >( Value::REAL_TYPE ));
     }
 
 void test_path_contains() {
@@ -420,16 +420,16 @@ void test_path_get_exceptions() {
 
     // Non-object
     const Value vint(2);
-    check_get_path_error_exception(vint, "x", Value::PathError("x", "<root>"));
+    LOG_TEST(check_get_path_error_exception(vint, "x", Value::PathError("x", "<root>")));
 
     // Non-existent path component
-    check_get_path_error_exception(v1, "shazaam", Value::PathError("shazaam", "shazaam"));
+    LOG_TEST(check_get_path_error_exception(v1, "shazaam", Value::PathError("shazaam", "shazaam")));
 
     // Empty subpath
-    check_get_path_error_exception(v1, "foo..a", Value::PathError("foo..a", ""));
+    LOG_TEST(check_get_path_error_exception(v1, "foo..a", Value::PathError("foo..a", "")));
 
     // Non-object in path
-    check_get_path_error_exception(v1, "foo.d.c", Value::PathError("foo.d.c", "d"));
+    LOG_TEST(check_get_path_error_exception(v1, "foo.d.c", Value::PathError("foo.d.c", "d")));
 }
 
 void test_path_get_helpers() {
@@ -581,17 +581,17 @@ void check_insert_path_error_exception(Value& v, const std::string& path, const 
 void test_path_insert_error() {
     // Non-object values
     Value v1(2);
-    check_insert_path_error_exception(v1, "foo", 2, Value::PathError("foo", "<root>"));
+    LOG_TEST(check_insert_path_error_exception(v1, "foo", 2, Value::PathError("foo", "<root>")));
 
     Object n;
     Value v2(n);
 
     // Empty subpath
-    check_insert_path_error_exception(v2, "foo..bar", 2, Value::PathError("foo..bar", ""));
+    LOG_TEST(check_insert_path_error_exception(v2, "foo..bar", 2, Value::PathError("foo..bar", "")));
 
     // baz isn't an object
     v2.insert("foo.baz", 2);
-    check_insert_path_error_exception(v2, "foo.baz.bar", 2, Value::PathError("foo.baz.bar", "baz"));
+    LOG_TEST(check_insert_path_error_exception(v2, "foo.baz.bar", 2, Value::PathError("foo.baz.bar", "baz")));
 
 }
 
@@ -604,25 +604,25 @@ void test_path_insert_error() {
 
         Container_constructor_runner()
         {
-            vector< double > vd = list_of( 1.2 )( 1.3 );  test_container_constructor( vd );
+            vector< double > vd = list_of( 1.2 )( 1.3 );  LOG_TEST(test_container_constructor( vd ));
             {
-                vector< int >    vi = list_of( 1 );           test_container_constructor( vi );
+                vector< int >    vi = list_of( 1 );           LOG_TEST(test_container_constructor( vi ));
             }
             {
-                vector< int >    vi = list_of( 1 )( 2 );      test_container_constructor( vi );
+                vector< int >    vi = list_of( 1 )( 2 );      LOG_TEST(test_container_constructor( vi ));
             }
             {
-                vector< int >    vi = list_of( 1 )( 2 )( 3 ); test_container_constructor( vi );
+                vector< int >    vi = list_of( 1 )( 2 )( 3 ); LOG_TEST(test_container_constructor( vi ));
             }
-            list< double >   ld = list_of( 1.2 )( 1.3 );  test_container_constructor( ld );
+            list< double >   ld = list_of( 1.2 )( 1.3 );  LOG_TEST(test_container_constructor( ld ));
             {
-                list< int >      li = list_of( 1 );           test_container_constructor( li );
-            }
-            {
-                list< int >      li = list_of( 1 )( 2 );      test_container_constructor( li );
+                list< int >      li = list_of( 1 );           LOG_TEST(test_container_constructor( li ));
             }
             {
-                list< int >      li = list_of( 1 )( 2 )( 3 ); test_container_constructor( li );
+                list< int >      li = list_of( 1 )( 2 );      LOG_TEST(test_container_constructor( li ));
+            }
+            {
+                list< int >      li = list_of( 1 )( 2 )( 3 ); LOG_TEST(test_container_constructor( li ));
             }
         }
 
@@ -663,11 +663,17 @@ void test_path_insert_error() {
 
         Variant_constructor_runner()
         {
+            LOG_TEMPLATE_TEST();
             test_variant_constructor< variant< int, double > >( 1.23 );
+            LOG_TEMPLATE_TEST();
             test_variant_constructor< variant< int, double > >( 123 );
+            LOG_TEMPLATE_TEST();
             test_variant_constructor< variant< int, double, String_type > >( to_str< String_type >( "foo" ) );
+            LOG_TEMPLATE_TEST();
             test_variant_constructor< variant< int, double, String_type, bool > >( true );
+            LOG_TEMPLATE_TEST();
             test_variant_constructor< variant< int, double, String_type, bool, boost::int64_t > >( boost::int64_t( 123 ) );
+            LOG_TEMPLATE_TEST();
             test_variant_constructor< variant< int, double, String_type, bool, boost::uint64_t > >( boost::uint64_t( 123 ) );
 
             {
@@ -676,25 +682,25 @@ void test_path_insert_error() {
                 assert( val.isNull() );
             }
 
-            vector< double > vd = list_of( 1.2 )( 1.3 );   test_variant_array_constructor< double > ( vd );
+            vector< double > vd = list_of( 1.2 )( 1.3 );   LOG_TEST(test_variant_array_constructor< double > ( vd ));
             {
-                vector< int >    vi = list_of( 1 );            test_variant_array_constructor< int >( vi );
+                vector< int >    vi = list_of( 1 );            LOG_TEST(test_variant_array_constructor< int >( vi ));
             }
             {
-                vector< int >    vi = list_of( 1 )( 2 );       test_variant_array_constructor< int >( vi );
+                vector< int >    vi = list_of( 1 )( 2 );       LOG_TEST(test_variant_array_constructor< int >( vi ));
             }
             {
-                vector< int >    vi = list_of( 1 )( 2 )( 3 );  test_variant_array_constructor< int >( vi );
+                vector< int >    vi = list_of( 1 )( 2 )( 3 );  LOG_TEST(test_variant_array_constructor< int >( vi ));
             }
-            list< double >   ld = list_of( 1.2 )( 1.3 );   test_variant_array_constructor< double >( ld );
+            list< double >   ld = list_of( 1.2 )( 1.3 );   LOG_TEST(test_variant_array_constructor< double >( ld ));
             {
-                list< int >      li = list_of( 1 );            test_variant_array_constructor< int >( li );
-            }
-            {
-                list< int >      li = list_of( 1 )( 2 );       test_variant_array_constructor< int >( li );
+                list< int >      li = list_of( 1 );            LOG_TEST(test_variant_array_constructor< int >( li ));
             }
             {
-                list< int >      li = list_of( 1 )( 2 )( 3 );  test_variant_array_constructor< int >( li );
+                list< int >      li = list_of( 1 )( 2 );       LOG_TEST(test_variant_array_constructor< int >( li ));
+            }
+            {
+                list< int >      li = list_of( 1 )( 2 )( 3 );  LOG_TEST(test_variant_array_constructor< int >( li ));
             }
         }
 

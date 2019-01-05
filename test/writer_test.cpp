@@ -528,23 +528,23 @@ namespace
 
         void test_escape_chars()
         {
-            test_escape_char( "\r", "\\r" );
-            test_escape_char( "\n", "\\n" );
-            test_escape_char( "\t", "\\t" );
-            test_escape_char( "\f", "\\f" );
-            test_escape_char( "\b", "\\b" );
-            test_escape_char( "\"", "\\\"" );
-            test_escape_char( "\\", "\\\\" );
-            test_escape_char( "\x01", "\\u0001" );
-            test_escape_char( "\x12", "\\u0012" );
-            test_escape_char( "\x7F", "\\u007F" );
+            LOG_TEST(test_escape_char( "\r", "\\r" ));
+            LOG_TEST(test_escape_char( "\n", "\\n" ));
+            LOG_TEST(test_escape_char( "\t", "\\t" ));
+            LOG_TEST(test_escape_char( "\f", "\\f" ));
+            LOG_TEST(test_escape_char( "\b", "\\b" ));
+            LOG_TEST(test_escape_char( "\"", "\\\"" ));
+            LOG_TEST(test_escape_char( "\\", "\\\\" ));
+            LOG_TEST(test_escape_char( "\x01", "\\u0001" ));
+            LOG_TEST(test_escape_char( "\x12", "\\u0012" ));
+            LOG_TEST(test_escape_char( "\x7F", "\\u007F" ));
         }
 
         void test_disabling_nonprintable_esc_chars()
         {
-            test_escape_char( "\t", "\\t", raw_utf8 );
-            test_escape_char( "\x01",     "\x01", raw_utf8 );
-            test_escape_char( "\x01\x12", "\x01\x12", raw_utf8 );
+            LOG_TEST(test_escape_char( "\t", "\\t", raw_utf8 ));
+            LOG_TEST(test_escape_char( "\x01",     "\x01", raw_utf8 ));
+            LOG_TEST(test_escape_char( "\x01\x12", "\x01\x12", raw_utf8 ));
         }
 
         void test_to_stream()
@@ -662,8 +662,8 @@ namespace
 
     void test_wide_esc_u()
     {
-        test_wide_esc_u( 0xABCD, L"ABCD" );
-        test_wide_esc_u( 0xFFFF, L"FFFF" );
+        LOG_TEST(test_wide_esc_u( 0xABCD, L"ABCD" ));
+        LOG_TEST(test_wide_esc_u( 0xFFFF, L"FFFF" ));
     }
 #endif
 
